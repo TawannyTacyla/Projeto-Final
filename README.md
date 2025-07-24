@@ -1,45 +1,70 @@
-🧠 MindStack – Organizador Cognitivo com Gestão de Memória
+## 🧠 Organizador Cognitivo com Gestão de Memória
 
-O MindStack é um sistema interativo em Python que simula o funcionamento da memória humana para organizar tarefas pessoais, acadêmicas e profissionais. Ele usa múltiplas estruturas de dados clássicas (listas, pilhas, filas, árvores, hash tables e heaps) para modelar diferentes componentes do processo de organização mental. Ideal para estudos de estrutura de dados com aplicação prática.
+### 📍 Problema para Resolver (Inovação)
 
-📌 Objetivo do Projeto
+Em um mundo cada vez mais acelerado, é comum que pessoas enfrentem **sobrecarga mental**, **procrastinação** e **desorganização de tarefas**. Inspirado no funcionamento da mente humana que possui diferentes níveis de memória e sistemas de priorização. O **projeto** propõe uma solução inovadora: um **organizador cognitivo digital**, que simula elementos da cognição humana por meio de estruturas de dados da ciência da computação.
 
-Muitas pessoas enfrentam dificuldades para organizar tarefas, priorizar atividades e manter o foco no que é realmente importante. O MindStack foi criado com o objetivo de auxiliar nesse processo, simulando a lógica da mente humana na organização do dia a dia.
+Esse projeto visa ajudar usuários a **registrar, classificar, priorizar, planejar e executar tarefas** de forma intuitiva, didática e funcional, promovendo uma experiência que imita a memória de curto prazo, o processo decisório e a categorização mental.
 
-⚙️ Funcionalidades
+A ideia surgiu da junção entre:
 
-1. Registrar Tarefa
+- A observação de como esquecemos tarefas importantes com frequência;
+- A necessidade de sistemas que ajudem na produtividade sem complexidade;
+- A vontade de aplicar conceitos de estruturas de dados em um contexto real.
 
-- O usuário descreve a tarefa, seleciona uma categoria (Estudo, Trabalho ou Pessoal), tempo estimado e prioridade.
-- A tarefa é armazenada em várias estruturas para análise e planejamento posterior.
+🔍 **Por que ele é relevante?**
 
-2. Mostrar Tarefas Registradas
+- Permite visualizar como diferentes estruturas de dados trabalham juntas;
+- É um modelo inicial para aplicativos de organização pessoal mais robustos;
+- Estimula o uso da inteligência computacional na solução de problemas cognitivos;
+- Pode evoluir para versões com inteligência artificial, persistência de dados e interface gráfica.
 
-- Lista todas as tarefas já registradas com seus metadados (tempo, prioridade, categoria).
+---
 
-3. Planejar Execução
+### 🧪 Roteiro para Resolver (Criação)
 
-- Utiliza um algoritmo de classificação com heapq para organizar as tarefas mais urgentes na fila de execução.
+Para transformar esse desafio em solução, foi seguido o seguinte plano:
 
-4. Executar Próxima Tarefa
+1. **Modelar a cognição humana com estruturas de dados**:
+   - Memória de curto prazo (últimos pensamentos): pilha;
+   - Organização hierárquica de assuntos: árvore;
+   - Execução de tarefas: fila;
+   - Registro geral: lista;
+   - Acesso rápido a detalhes: hash table;
+   - Prioridades e urgências: heap.
 
-- Retira a próxima tarefa da fila (estrutura de fila deque) e a exibe como sendo executada.
+2. **Criar funções interativas** que permitam:
+   - Registrar tarefas;
+   - Visualizar e desfazer registros;
+   - Planejar automaticamente uma fila de execução;
+   - Executar tarefas com base na prioridade.
 
-5. Desfazer Última Tarefa
+3. **Oferecer uma interface de linha de comando simples**, com menu e opções acessíveis.
 
-- Utiliza uma pilha para permitir o "desfazer" da última ação registrada.
+---
 
-6. Ver Categorias (Árvore Simulada)
+### 🧱 Estruturas Utilizadas
 
-- Apresenta uma estrutura de árvore (simulada com dicionários) com categorias e exemplos.
+| Estrutura de Dados | Função no Projeto |
+|--------------------|-------------------|
+| **Lista** (`caixa_entrada`) | Armazena todas as tarefas registradas |
+| **Pilha** (`memoria_curta`) | Simula memória de curto prazo (últimas tarefas) |
+| **Fila** (`fila_execucao`) | Define a ordem de execução das tarefas |
+| **Árvore simulada** (`categorias`) | Organiza as tarefas por área temática |
+| **Hash Table** (`metadados`) | Guarda dados específicos de cada tarefa |
+| **Heap (fila de prioridade)** (`heap_prioridade`) | Garante execução ordenada por urgência |
 
-7. Encerrar Sistema
+---
 
-- Opção para sair do sistema com uma mensagem final.
+### 💻 Script – Implementação
 
+O sistema é implementado em **Python** e conta com as seguintes funções principais:
 
-🧪 Testes Sugeridos
+- `registrar_tarefa()`: recebe os dados da tarefa, armazena em múltiplas estruturas e calcula a urgência com base em tempo e prioridade.
+- `planejar_execucao()`: utiliza o heap para ordenar as tarefas e armazená-las na fila.
+- `executar_tarefa()`: simula a realização da tarefa.
+- `desfazer_ultima()`: remove a tarefa mais recente registrada.
+- `mostrar_tarefas()`: exibe todas as tarefas registradas e seus metadados.
+- `exibir_categorias()`: mostra a árvore simulada com categorias e subtarefas.
 
-- Registre tarefas com diferentes prioridades e tempos para testar a ordem automática de execução.
-- Use a opção "Desfazer" e observe a remoção da última tarefa.
-- Planeje a execução e execute algumas tarefas, verificando a ordem de retirada da fila.
+A interface principal (`main()`) apresenta um menu para interação em tempo real com o sistema.
