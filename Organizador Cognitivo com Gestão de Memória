@@ -1,0 +1,138 @@
+from collections import deque
+import heapq
+
+# -------------------------
+# Estruturas de Dados
+# -------------------------
+
+# Lista: caixa de entrada (registro bruto)
+caixa_entrada = []
+
+# Pilha: memória de curto prazo (últimas tarefas registradas)
+memoria_curta = []
+
+# Fila: execução planejada
+fila_execucao = deque()
+
+# Árvore de categorias (simulada como dicionário aninhado)
+categorias = {
+    "Estudo": ["Revisar conteúdo", "Fazer exercício", "Assistir aula"],
+    "Trabalho": ["Responder e-mails", "Preparar relatório"],
+    "Pessoal": ["Ligar para alguém", "Marcar consulta"]
+}
+
+# Hash Table: metadados das tarefas (tempo, prioridade, categoria)
+metadados = {}
+
+# Heap para classificação automática (menor prioridade = mais urgente)
+heap_prioridade = []  # (pontuação, tarefa)
+
+
+# -------------------------
+# Funções do Sistema
+# -------------------------
+
+def registrar_tarefa():
+    print("\n=== Registrar nova tarefa ===")
+    tarefa = input("Descreva a tarefa: ")
+    categoria = input("Categoria (Estudo, Trabalho, Pessoal): ")
+    tempo = int(input("Tempo estimado (em minutos): "))
+    prioridade = int(input("Nível de prioridade (1=máxima, 5=mínima): "))
+
+    # Adiciona às estruturas
+    caixa_entrada.append(tarefa)
+    memoria_curta.append(tarefa)
+    metadados[tarefa] = {
+        "tempo": tempo,
+        "prioridade": prioridade,
+        "categoria": categoria
+    }
+
+    # Classificação automática
+    score = prioridade + (tempo // 30)  # pondera tempo e prioridade
+    heapq.heappush(heap_prioridade, (score, tarefa))
+    print(f"Tarefa '{tarefa}' registrada com sucesso!")
+
+
+def planejar_execucao():
+    print("\n=== Planejar Execução ===")
+    while heap_prioridade:
+        _, tarefa = heapq.heappop(heap_prioridade)
+        fila_execucao.append(tarefa)
+        print(f"Adicionada à fila: {tarefa}")
+
+
+def executar_tarefa():
+    if fila_execucao:
+        tarefa = fila_execucao.popleft()
+        print(f"\nExecutando tarefa: {tarefa}")
+    else:
+        print("\nNenhuma tarefa planejada no momento.")
+
+
+def desfazer_ultima():
+    if memoria_curta:
+        tarefa = memoria_curta.pop()
+        caixa_entrada.remove(tarefa)
+        metadados.pop(tarefa, None)
+        print(f"\nTarefa desfeita: {tarefa}")
+    else:
+        print("\nNada a desfazer.")
+
+
+def mostrar_tarefas():
+    print("\n=== Tarefas Registradas ===")
+    if not caixa_entrada:
+        print("Nenhuma tarefa registrada.")
+        return
+    for tarefa in caixa_entrada:
+        dados = metadados.get(tarefa, {})
+        print(f"- {tarefa} | Categoria: {dados.get('categoria')} | Tempo: {dados.get('tempo')}min | Prioridade: {dados.get('prioridade')}")
+
+
+def exibir_categorias():
+    print("\n=== Categorias (Árvore Simulada) ===")
+    for cat, tarefas in categorias.items():
+        print(f"{cat}:")
+        for t in tarefas:
+            print(f"  └─ {t}")
+
+
+# -------------------------
+# Interface Principal
+# -------------------------
+
+def main():
+    print("🧠 MindStack – Organizador Cognitivo com Gestão de Memória")
+
+    while True:
+        print("\nMenu:")
+        print("[1] Registrar nova tarefa")
+        print("[2] Mostrar tarefas registradas")
+        print("[3] Planejar execução")
+        print("[4] Executar próxima tarefa")
+        print("[5] Desfazer última tarefa")
+        print("[6] Ver categorias (árvore)")
+        print("[0] Sair")
+        opcao = input("Escolha: ")
+
+        if opcao == "1":
+            registrar_tarefa()
+        elif opcao == "2":
+            mostrar_tarefas()
+        elif opcao == "3":
+            planejar_execucao()
+        elif opcao == "4":
+            executar_tarefa()
+        elif opcao == "5":
+            desfazer_ultima()
+        elif opcao == "6":
+            exibir_categorias()
+        elif opcao == "0":
+            print("Encerrando MindStack. Até logo!")
+            break
+        else:
+            print("Opção inválida.")
+
+if __name__ == "__main__":
+    main()
